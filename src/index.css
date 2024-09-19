@@ -1,13 +1,534 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* General Variables */
+:root {
+  --primary-bg: linear-gradient(135deg, #e2e2e2 0%, #ffffff 100%);
+  --header-bg: linear-gradient(135deg, #3182ce 0%, #63b3ed 100%);
+  --button-view-bg: linear-gradient(135deg, #3182ce 0%, #63b3ed 100%);
+  --button-delete-bg: linear-gradient(135deg, #e53e3e 0%, #f56565 100%);
+  --modal-bg: #ffffff;
+  --box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  --border-color: #e2e8f0;
+  --focus-color: #3182ce;
+  --text-color: #2d3748;
+  --header-color: #1e3a8a;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Global Styles */
+.dashboard-container {
+  min-height: 100vh; /* Adjust height for iPhone-like appearance */
+  max-width: 400px; /* Typical width for iPhone screens */
+  width: 100%;
+  background: var(--primary-bg);
+  padding: 1rem 0rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 2rem; /* Rounded corners like an iPhone */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Subtle shadow for elevation */
+  border: 6px solid black; /* Optional border to resemble the phone edge */
+  position: relative; /* For additional elements like the notch */
+  overflow: hidden; /* Hide overflow to keep rounded corners clean */
+}
+
+/* Optional: iPhone notch simulation */
+.dashboard-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 20px;
+  background: #000;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Responsive adjustments for centering */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f0f4f8; /* Light background for contrast */
+  margin: 0;
+}
+
+/* Header styling */
+.dashboard-header ,h4 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--header-color);
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Main content styling */
+.dashboard-content {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: var(--box-shadow);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  height: 60vh; /* Set a fixed height */
+  max-height: 60vh; /* Ensure it doesn't grow beyond this */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Optional: To prevent horizontal overflow */
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.table {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table-header {
+  background: var(--header-bg);
+  color: #ffffff;
+}
+
+.table-header th {
+  padding: 0.75rem 1.5rem;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.table-row {
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.table-row:hover {
+  background: #f7fafc;
+  transform: translateY(-2px);
+}
+
+/* Button styling */
+.button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  transition: background-color 0.3s, transform 0.2s;
+  font-size: 1rem;
+  cursor: pointer; /* Ensure cursor is a pointer for buttons */
+}
+
+.button-view {
+  background: var(--button-view-bg);
+  color: #ffffff;
+}
+
+.button-view:hover {
+  background: #2b6cb0;
+  transform: scale(1.05);
+}
+
+.button-delete {
+  background: var(--button-delete-bg);
+  color: #ffffff;
+}
+
+.button-delete:hover {
+  background: #c53030;
+  transform: scale(1.05);
+}
+
+/* Modal styling */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal-content {
+  background: var(--modal-bg);
+  border-radius: 1rem;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  padding: 2rem;
+  max-width: 40rem;
+  width: 90%;
+  transform: translateY(-20px);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.modal-content:hover {
+  transform: translateY(0);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5);
+}
+
+/* Form styling */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Input and Textarea styling */
+.input-field, .textarea-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.375rem;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-field:focus, .textarea-field:focus {
+  border-color: var(--focus-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+}
+
+/* Label styling */
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+/* Search bar styling */
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Increased space between input field and button */
+  margin-bottom: 1.5rem;
+  max-width: 60rem; /* Max width of the search bar */
+  margin: 0 auto; /* Center align the search bar */
+}
+
+.search-bar .input-field {
+  flex: 1; /* Make input field grow to fill available space */
+  padding: 0.75rem 1rem; /* Padding inside input fields */
+  border: 1px solid #e2e8f0; /* Light gray border */
+  border-radius: 0.375rem; /* Rounded corners */
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+  font-size: 1rem; /* Font size */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+}
+
+.search-bar .input-field:focus {
+  border-color: #3182ce; /* Blue border on focus */
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2); /* Focus shadow */
+}
+
+.search-bar .button {
+  padding: 0.75rem 1.5rem; /* Padding inside button */
+  border-radius: 0.375rem; /* Rounded corners */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+  font-size: 1rem; /* Font size */
+  width: 100%; /* Make button full-width */
+  max-width: 15rem; /* Limit max width of the button */
+  margin: 0 auto; /* Center button horizontally */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .search-bar {
+    gap: 1rem; /* Adjust gap for smaller screens */
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .dashboard-container {
+    padding: 1.5rem;
+  }
+
+  .dashboard-content {
+    padding: 1rem;
+    width: 90%;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .table {
+    font-size: 0.875rem;
+  }
+
+  .button {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .modal-content {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+
+  .dashboard-header {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-content {
+    padding: 0.5rem; /* Reduce padding on smaller screens */
+    max-height: 50vh; /* Reduce max-height to fit smaller screens */
+  }
+
+  .table-container {
+    margin-top: 1rem;
+  }
+
+  .table {
+    font-size: 0.75rem;
+  }
+
+  .button {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .modal-content {
+    max-width: 95%;
+    padding: 1rem;
+  }
+
+  .search-bar {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header {
+    font-size: 1.25rem;
+  }
+
+  .dashboard-content {
+    padding: 0.5rem;
+  }
+
+  .table-header th {
+    font-size: 0.75rem;
+    padding: 0.5rem;
+  }
+
+  .table-cell {
+    padding: 0.5rem;
+  }
+
+  .button {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .modal-content {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .search-bar {
+    gap: 0.5rem;
+  }
+}
+@media (max-width: 1024px) { /* For tablets and smaller desktops */
+  .dashboard-container {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #f0f4f8; /* Light background for contrast */
+  }
+
+  .dashboard-header {
+    font-size: 2.5rem;
+    color: #2b6cb0; /* Accent color */
+    border-bottom: 2px solid #e2e8f0; /* Underline for emphasis */
+    padding-bottom: 1rem; /* Space below header */
+  }
+
+  .dashboard-content {
+    padding: 2rem;
+    max-width: 80%;
+    background: #ffffff;
+    border-radius: 0.75rem; /* Rounded corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .table {
+    font-size: 0.875rem;
+    background: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .table-header {
+    background: #3182ce;
+    color: #ffffff;
+    border-radius: 0.5rem 0.5rem 0 0; /* Rounded corners on top */
+  }
+
+  .table-header th {
+    padding: 1rem;
+  }
+
+  .table-row {
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  .table-row:hover {
+    background: #f7fafc;
+    transform: translateY(-2px);
+  }
+
+  .button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s, transform 0.2s;
+    cursor: pointer;
+  }
+
+  .button-view {
+    background: #3182ce;
+    color: #ffffff;
+  }
+
+  .button-view:hover {
+    background: #2b6cb0;
+    transform: scale(1.05);
+  }
+
+  .button-delete {
+    background: #e53e3e;
+    color: #ffffff;
+  }
+
+  .button-delete:hover {
+    background: #c53030;
+    transform: scale(1.05);
+  }
+
+  .modal-content {
+    max-width: 80%;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    gap: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .search-bar .button {
+    width: 100%;
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 768px) { /* For mobile screens */
+  .dashboard-container {
+    padding: 1.5rem;
+  }
+
+  .dashboard-header {
+    font-size: 2rem;
+  }
+
+  .dashboard-content {
+    padding: 1rem;
+    max-width: 90%;
+  }
+
+  .table-container {
+    margin-top: 1rem;
+  }
+
+  .table {
+    font-size: 0.75rem;
+  }
+
+  .button {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .modal-content {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+
+  .search-bar {
+    gap: 0.75rem;
+  }
+}
+
+/* For very small mobile screens */
+@media (max-width: 480px) {
+  .dashboard-header {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-content {
+    padding: 0.75rem;
+  }
+
+  .table-header th {
+    font-size: 0.75rem;
+    padding: 0.5rem;
+  }
+
+  .button {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .modal-content {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .search-bar {
+    gap: 0.5rem;
+  }
 }
