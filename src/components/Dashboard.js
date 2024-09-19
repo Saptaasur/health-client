@@ -16,7 +16,13 @@ const Dashboard = () => {
   const fetchRecords = async () => {
     try {
       const response = await axios.get('/api/health-records');
-      setRecords(response.data);
+      console.log('API response data:', response.data); // Log the data to verify
+      if (Array.isArray(response.data)) {
+        setRecords(response.data);
+      } else {
+        console.error('Expected an array but received:', response.data);
+        setRecords([]); // Set to empty array if data is not an array
+      }
     } catch (error) {
       console.error('Error fetching records:', error);
     }
@@ -52,7 +58,7 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {records.map((record) => (
+              {Array.isArray(records) ? records.map((record) => (
                 <tr key={record._id} className="table-row">
                   <td className="table-cell">{record.date}</td>
                   <td className="table-cell">{record.temperature}</td>
@@ -73,7 +79,9 @@ const Dashboard = () => {
                     </button>
                   </td>
                 </tr>
-              ))}
+              )) : (
+                <tr><td colSpan="5">No records found</td></tr>
+              )}
             </tbody>
           </table>
         </div>
