@@ -17,7 +17,7 @@ const AddRecordForm = ({ onAdd }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/health-records', formData);
+      await axios.post('https://health-server-mcxj.onrender.com/api/health-records', formData);
       onAdd(); // Refresh records
       setFormData({ date: '', temperature: '', bloodPressure: '', heartRate: '' });
     } catch (error) {

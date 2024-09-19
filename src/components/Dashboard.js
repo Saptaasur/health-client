@@ -15,7 +15,7 @@ const Dashboard = () => {
 
   const fetchRecords = async () => {
     try {
-      const response = await axios.get('/api/health-records');
+      const response = await axios.get('https://health-server-mcxj.onrender.com/api/health-records');
       console.log('API response data:', response.data);
       if (typeof response.data === 'object' && Array.isArray(response.data)) {
         setRecords(response.data);
@@ -31,7 +31,7 @@ const Dashboard = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/health-records/${id}`);
+      await axios.delete(`https://health-server-mcxj.onrender.com/api/health-records/${id}`);
       fetchRecords(); // Refresh the records after deletion
     } catch (error) {
       console.error('Error deleting record:', error);

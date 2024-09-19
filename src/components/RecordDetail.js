@@ -15,7 +15,7 @@ const RecordDetail = ({ record, onClose }) => {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`/api/health-records/${record._id}`, formData);
+      await axios.put(`https://health-server-mcxj.onrender.com/api/health-records/${record._id}`, formData);
       onClose(); // Close the modal after updating
     } catch (error) {
       console.error('Error updating record:', error);
@@ -24,7 +24,7 @@ const RecordDetail = ({ record, onClose }) => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/api/health-records/${record._id}`);
+      await axios.delete(`https://health-server-mcxj.onrender.com/api/health-records/${record._id}`);
       onClose(); // Close the modal after deleting
     } catch (error) {
       console.error('Error deleting record:', error);
