@@ -1,70 +1,104 @@
-# Getting Started with Create React App
+## Health Tracking App
+A Health Tracking Application built with React for the frontend and Node.js with Express for the backend. This app allows users (patients) to log and track daily health metrics such as body temperature, blood pressure, and heart rate. It provides a dashboard for managing health records, a form for adding new records, a detailed view of each record, and search functionality.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Table of Contents
+Features
+Technologies Used
+Getting Started
+Environment Variables
+Backend Setup
+Frontend Setup
+Running the App
+Deployment
+Troubleshooting
+Contributing
+License
+Features
+# Add, view, search, and delete health records.
+Displays a dashboard with a summary of all health metrics.
+Provides a detailed view for each health record.
+Built-in form validation for record addition.
+Uses MongoDB for data storage.
+API endpoints for managing health data.
+Technologies Used
+Frontend: React 18, Axios
+Backend: Node.js, Express
+Database: MongoDB
+Styling: Custom CSS 
+Deployment: Render (backend), Vercel (frontend)
+Getting Started
+Follow these instructions to set up the project locally.
 
-## Available Scripts
+Prerequisites
+Node.js (v14 or later)
+npm (v6 or later)
+MongoDB for the backend
+Git
+Environment Variables
+Create a .env file in the root of your backend directory to store environment-specific variables such as database URLs, API keys, and port numbers. Here is an example:
 
-In the project directory, you can run:
+makefile
+Copy code
+# Backend .env file
+PORT=5000
+MONGODB_URI=<your-mongodb-uri>
+JWT_SECRET=<your-jwt-secret>
+For the frontend, set up environment variables in a .env file in the root of the frontend directory:
 
-### `npm start`
+bash
+Copy code
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Backend Setup
+Navigate to the backend directory:
+bash
+Copy code
+cd backend
+Install dependencies:
+bash
+Copy code
+npm install
+Start the server:
+bash
+Copy code
+npm start
+The backend server should now be running on http://localhost:5000.
+Frontend Setup
+Navigate to the frontend directory:
+bash
+Copy code
+cd frontend
+Install dependencies:
+bash
+Copy code
+npm install
+Start the React application:
+bash
+Copy code
+npm start
+The app should now be running on http://localhost:3000.
+Running the App
+Ensure the backend server is running.
+Start the frontend application.
+Visit http://localhost:3000 to use the Health Tracking App.
+Deployment
+Backend (Azure)
+Ensure the backend server is prepared for production (e.g., npm run build if applicable).
+Deploy the backend to Azure using your preferred deployment method (Azure CLI, GitHub Actions, etc.).
+Frontend (Vercel)
+Log in to your Vercel account and deploy the frontend application.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+API Returning HTML: If the API returns HTML instead of JSON, check the following:
+Ensure that the API endpoint is correct and accessible in the production environment.
+Verify CORS settings on the backend.
+Check the deployment configurations for any server-side routing issues.
+Deployment Issues: Review the logs on your hosting platform (Azure for backend, Vercel for frontend) for errors or misconfigurations.
+Contributing
+Contributions are welcome! Please follow these steps:
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Fork the repository.
+Create a new branch (git checkout -b feature/YourFeature).
+Commit your changes (git commit -am 'Add a new feature').
+Push to the branch (git push origin feature/YourFeature).
+Create a new Pull Request.
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
