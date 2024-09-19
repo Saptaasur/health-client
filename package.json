@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "proxy": "https://health-server-jlwi.onrender.com",
+  "proxy": "https://health-server-mcxj.onrender.com",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",

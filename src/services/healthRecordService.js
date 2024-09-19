@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/health-records';
+const API_URL = 'https://health-server-mcxj.onrender.com';
 
 const fetchRecords = () => axios.get(API_URL);
 const fetchRecordById = (id) => axios.get(`${API_URL}/${id}`);
