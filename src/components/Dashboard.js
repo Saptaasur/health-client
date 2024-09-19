@@ -16,17 +16,18 @@ const Dashboard = () => {
   const fetchRecords = async () => {
     try {
       const response = await axios.get('/api/health-records');
-      console.log('API response data:', response.data); // Log the data to verify
-      if (Array.isArray(response.data)) {
+      console.log('API response data:', response.data);
+      if (typeof response.data === 'object' && Array.isArray(response.data)) {
         setRecords(response.data);
       } else {
         console.error('Expected an array but received:', response.data);
-        setRecords([]); // Set to empty array if data is not an array
+        setRecords([]);
       }
     } catch (error) {
       console.error('Error fetching records:', error);
     }
   };
+  
 
   const handleDelete = async (id) => {
     try {
